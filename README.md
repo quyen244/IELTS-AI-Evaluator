@@ -123,7 +123,7 @@ Hệ thống đánh giá bài viết dựa trên khung tiêu chí chuẩn của 
 * ✅ **Detailed Lexical Feedback**: Xuất báo cáo JSON chi tiết về từ vựng (Correct sentence, impact level, error types).
 * ✅ **Synonym Suggestions**: Gợi ý các từ đồng nghĩa nâng cao để tăng điểm Lexical Resource.
 * ✅ **Support Task 1 & 2**: Nhận diện và chấm điểm riêng biệt cho từng loại bài viết (Report & Essay).
-* ✅ **History Tracking**: Lưu trữ lịch sử bài viết để theo dõi sự tiến bộ theo thời gian.
+* ✅ **History Tracking**: Lưu trữ lịch sử bài viết để theo dõi sự tiến bộ theo thời gian sản.
 
 ---
 
