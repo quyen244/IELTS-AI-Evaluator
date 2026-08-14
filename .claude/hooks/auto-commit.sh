@@ -12,7 +12,13 @@ MIN_LINES="${IAE_MIN_LINES:-40}"
 MIN_FILES="${IAE_MIN_FILES:-3}"
 AUTOPUSH="${IAE_AUTOPUSH:-1}"
 
-emit() { printf '{"systemMessage": %s, "suppressOutput": true}\n' "$(printf '%s' "$1" | python -c 'import json,sys; print(json.dumps(sys.stdin.read()))')"; exit 0; }
+# Read as UTF-8 explicitly: on Windows Python defaults to the ANSI codepage and
+# mangles any non-ASCII character in the message.
+emit() {
+  printf '{"systemMessage": %s, "suppressOutput": true}\n' \
+    "$(printf '%s' "$1" | python -c 'import json,sys; sys.stdin.reconfigure(encoding="utf-8", errors="replace"); print(json.dumps(sys.stdin.read()))')"
+  exit 0
+}
 quiet() { printf '{"suppressOutput": true}\n'; exit 0; }
 
 cd "${CLAUDE_PROJECT_DIR:-.}" 2>/dev/null || quiet
