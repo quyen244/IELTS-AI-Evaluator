@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/auto-commit.sh\"",
+            "timeout": 120,
+            "statusMessage": "Auto-commit + push..."
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(python -m scripts.run_mvp:*)",
+      "Bash(python -m scripts.run_eval:*)",
+      "Bash(ollama list:*)",
+      "Bash(ollama ps:*)"
+    ]
+  }
+}
