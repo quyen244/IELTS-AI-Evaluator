@@ -75,9 +75,17 @@ if [ "$AUTOPUSH" != "1" ]; then
 fi
 
 if git remote get-url origin >/dev/null 2>&1; then
-  PUSH_ERR="$(git push origin "$BRANCH" 2>&1)"
-  if [ $? -eq 0 ]; then
+  # Never let the push block the turn. GIT_TERMINAL_PROMPT=0 and the askpass stub
+  # make git fail immediately instead of waiting on an interactive credential
+  # prompt that nobody can answer from inside a hook; the timeout catches a stalled
+  # network. The commit is already safe locally either way.
+  PUSH_ERR="$(GIT_TERMINAL_PROMPT=0 GIT_ASKPASS=echo SSH_ASKPASS=echo \
+    timeout "${IAE_PUSH_TIMEOUT:-45}" git push origin "$BRANCH" 2>&1)"
+  PUSH_RC=$?
+  if [ "$PUSH_RC" -eq 0 ]; then
     emit "Auto-committed $SHA and pushed to origin/$BRANCH — $SUBJECT"
+  elif [ "$PUSH_RC" -eq 124 ]; then
+    emit "Auto-committed $SHA on $BRANCH. Push timed out — run 'git push' manually to authenticate."
   fi
   emit "Auto-committed $SHA on $BRANCH, but push failed: $(printf '%s' "$PUSH_ERR" | tail -2 | tr '\n' ' ')"
 fi
