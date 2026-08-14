@@ -39,7 +39,10 @@ Bộ tài liệu thiết kế, kỹ thuật và triển khai cho hệ thống **
 ### 04 — Roadmap
 - [roadmap.md](04-roadmap/roadmap.md) — Lộ trình P0 → P3, hạng mục cải thiện có ưu tiên, exit criteria từng phase.
 
-### 05 — ADR (Architecture Decision Records)
+### 05 — Deployment
+- [aws-deployment.md](05-deployment/aws-deployment.md) — Deploy demo lên AWS (EC2 GPU + Ollama + FastAPI), CI/CD qua GitHub Actions, chi phí, dọn dẹp. **Đọc mục chi phí trước khi launch.**
+
+### 06 — ADR (Architecture Decision Records)
 - [adr/0001-local-llm-first.md](adr/0001-local-llm-first.md)
 - [adr/0002-drop-langchain-for-mvp.md](adr/0002-drop-langchain-for-mvp.md)
 - [adr/0003-deterministic-band-aggregation.md](adr/0003-deterministic-band-aggregation.md)

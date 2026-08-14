@@ -23,10 +23,11 @@
 * **LLM cho phán đoán, code cho số học:** đếm từ, TTR, trung bình, làm tròn band, length penalty, kiểm chứng trích dẫn — tất cả bằng code.
 * **Đo lường tích hợp:** eval harness với gold-label dataset, 8 metric chất lượng + 12 metric hệ thống, `quote_fidelity` phát hiện feedback bịa đặt.
 * **Provider-agnostic:** mọi thứ đi qua `LLMClient` Protocol — thêm OpenAI/Gemini là thêm một adapter, pipeline không đổi.
+* **Demo API + CI/CD:** FastAPI wrapper (`src/backend/app.py`), Docker, CloudFormation cho EC2 GPU, GitHub Actions (test tự động + deploy thủ công) — xem [aws-deployment.md](docs/05-deployment/aws-deployment.md).
 
 > 📖 **Toàn bộ PRD, kiến trúc, luồng hệ thống, technical spec, evaluation protocol và roadmap P0→P3 nằm trong [`docs/`](docs/README.md).**
 
-### Chạy thử
+### Chạy thử (local, CLI)
 
 ```bash
 pip install -r requirements.txt
@@ -34,8 +35,20 @@ ollama pull qwen3.5:4b
 
 python -m scripts.run_mvp --exam-id T2-001      # chấm 1 bài
 python -m scripts.run_eval --out data/reports   # benchmark 10 bài + báo cáo
-python -m pytest tests/ -q                      # 41 test cho phần xác định
+python -m pytest tests/ -q                      # 58 test (deterministic + API, không cần GPU)
 ```
+
+### Chạy thử (Docker, local API)
+
+```bash
+docker compose up --build          # cần NVIDIA Container Toolkit cho GPU passthrough
+curl http://localhost:8000/health
+curl -X POST http://localhost:8000/evaluate/T2-002
+```
+
+### Deploy lên AWS
+
+Xem [docs/05-deployment/aws-deployment.md](docs/05-deployment/aws-deployment.md) — **đọc mục chi phí trước**, template khởi tạo EC2 GPU tính phí theo giờ.
 
 ---
 

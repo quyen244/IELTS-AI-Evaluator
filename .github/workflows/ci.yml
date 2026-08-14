@@ -1,0 +1,38 @@
+name: CI
+
+# Runs on every push/PR. No GPU, no Ollama, no network calls: this exercises the
+# deterministic pipeline logic (rounding, aggregation, quote verification) and the
+# API layer against a fake LLM client (see tests/test_pipeline_offline.py and
+# tests/test_backend_offline.py) - the same split the project's docs describe as
+# "LLM for judgement, code for arithmetic." Grading the real qwen3.5:4b model
+# requires a GPU and isn't something a shared CI runner can do; that's what
+# scripts/run_eval.py is for, run locally or on the deploy target.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: python -m pytest tests/ -v
+
+      - name: Validate CloudFormation template
+        run: |
+          pip install cfn-lint
+          cfn-lint deploy/aws/cloudformation.yaml
+
+      - name: Build Docker image (build-only, no push)
+        run: docker build -t iae-app:ci .

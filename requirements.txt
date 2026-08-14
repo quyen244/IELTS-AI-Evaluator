@@ -4,12 +4,15 @@ pydantic>=2.7
 pydantic-settings>=2.2
 python-dotenv>=1.0
 
+# Demo API (thin FastAPI wrapper for the AWS demo deploy — see src/backend/app.py)
+fastapi>=0.110
+uvicorn[standard]>=0.29
+
 # Test
 pytest>=8.0
+httpx>=0.27  # required by fastapi.testclient.TestClient
 
-# P1+ (not required to run the MVP pipeline)
-# fastapi>=0.110
-# uvicorn>=0.29
+# P1+ (not required to run the MVP pipeline or the demo deploy)
 # streamlit>=1.33
 # sqlalchemy>=2.0
 # psycopg[binary]>=3.1

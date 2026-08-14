@@ -1,0 +1,14 @@
+# Used on the EC2 instance only (see deploy/aws/cloudformation.yaml + the deploy
+# GitHub Actions workflow). Unlike docker-compose.yml, Ollama is NOT a sibling
+# container here — it runs natively on the host (installed by the CloudFormation
+# user-data script) because that sidesteps wiring the NVIDIA Container Toolkit for
+# a single-instance demo. `network_mode: host` lets the app container reach it at
+# localhost:11434 without any bridge/port-mapping gymnastics.
+services:
+  app:
+    build: .
+    network_mode: host
+    environment:
+      OLLAMA_HOST: "http://localhost:11434"
+      OLLAMA_KEEP_ALIVE: "-1"
+    restart: unless-stopped

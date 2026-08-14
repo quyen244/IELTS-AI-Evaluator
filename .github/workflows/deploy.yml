@@ -1,0 +1,74 @@
+name: Deploy to AWS
+
+# Manual trigger ONLY - deliberately not wired to push/main. This project bills a
+# GPU EC2 instance by the hour (see docs/05-deployment/aws-deployment.md); an
+# auto-deploy-on-push workflow would mean any commit could touch a live, billed
+# box unattended. Provisioning the box itself (deploy/aws/cloudformation.yaml) is
+# a separate, even-more-deliberate manual step - this workflow only pushes app
+# code to an instance that already exists.
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "deploy" to confirm - this pushes code to a live, billed EC2 instance.'
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Check confirmation
+        run: |
+          if [ "${{ github.event.inputs.confirm }}" != "deploy" ]; then
+            echo "Confirmation text did not match 'deploy'. Aborting." >&2
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Run tests before deploying
+        run: |
+          pip install -r requirements.txt
+          python -m pytest tests/ -v
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Sync app source to the instance
+        run: |
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/deploy_key" \
+            --exclude='.git' --exclude='__pycache__' --exclude='.pytest_cache' \
+            --exclude='data/reports' --exclude='.env' \
+            ./ "${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/opt/iae/"
+
+      - name: Build and restart the app container
+        run: |
+          ssh -i ~/.ssh/deploy_key "${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}" '
+            set -euxo pipefail
+            cd /opt/iae
+            docker compose -f docker-compose.prod.yml up -d --build
+          '
+
+      - name: Wait for health check
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf "http://${{ secrets.EC2_HOST }}:8000/health" | grep -q '"ok":true'; then
+              echo "Healthy."
+              exit 0
+            fi
+            echo "Not ready yet, retrying ($i/30)..."
+            sleep 10
+          done
+          echo "Health check did not pass in time." >&2
+          exit 1
