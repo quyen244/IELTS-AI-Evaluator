@@ -1,0 +1,21 @@
+{
+  "exam_id": "T1-004",
+  "task_type": "task1",
+  "task_variant": "academic-process",
+  "topic": "Recycling process for glass bottles",
+  "prompt": "The diagram below shows the process by which used glass bottles are recycled into new products.\n\nSummarise the information by selecting and reporting the main features.\n\nWrite at least 150 words.",
+  "chart_description": "Process diagram, 7 stages, cyclical.\n\n1. Consumers deposit used glass bottles into collection banks.\n2. Collection lorries transport the bottles to a processing plant.\n3. Bottles are washed in a chemical solution to remove labels and residue.\n4. Cleaned bottles pass along a conveyor belt where they are sorted by colour (clear, green, brown).\n5. Sorted glass is crushed into small fragments known as cullet.\n6. Cullet is fed into a furnace and melted at approximately 1,500 degrees Celsius.\n7. Molten glass is poured into moulds to form new bottles, which are then delivered to retailers and returned to consumers.",
+  "essay": "The diagram illustrates how discarded glass bottles are processed and returned to consumers as new containers.\n\nOverall, the procedure consists of seven stages, beginning with the collection of used bottles and culminating in the distribution of newly moulded ones. It is notable that the process is cyclical rather than linear, as the finished products re-enter the same consumption chain from which the raw material was drawn.\n\nAt the outset, consumers deposit their empty bottles at designated collection banks, from which lorries transport them to a processing facility. Once they have arrived, the bottles are immersed in a chemical solution so that labels and residual contents can be removed.\n\nIn the subsequent stage, the cleaned bottles are conveyed along a belt where they are separated according to colour into clear, green and brown categories. The sorted glass is then crushed into small fragments, referred to as cullet, before being fed into a furnace and melted at a temperature of roughly 1,500 degrees Celsius.\n\nFinally, the molten glass is poured into moulds to produce fresh bottles, which are dispatched to retailers and thereby made available to consumers once more, at which point the cycle can begin again.",
+  "gold": {
+    "overall": 8.0,
+    "criteria": {
+      "TA": 8.0,
+      "CC": 8.5,
+      "LR": 8.0,
+      "GRA": 8.0
+    },
+    "source": "expert-estimate-from-official-descriptors",
+    "confidence": "medium"
+  },
+  "notes": "Band 8.0 profile. Overview identifies both the number of stages and the crucial structural insight that the process is cyclical — a genuine 'main feature' rather than a restatement. All stages covered accurately without listing mechanically. Passive voice used consistently and appropriately for process description ('are immersed', 'are conveyed', 'is poured'). Sequencing is varied and natural ('At the outset', 'Once they have arrived', 'In the subsequent stage', 'before being fed'). Precise vocabulary ('discarded', 'culminating', 'designated', 'residual', 'dispatched'). Word count ~200."
+}

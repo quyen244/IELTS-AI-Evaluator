@@ -1,0 +1,21 @@
+{
+  "exam_id": "T2-005",
+  "task_type": "task2",
+  "task_variant": "advantages-disadvantages",
+  "topic": "Social media",
+  "prompt": "More and more people are using social media to communicate with others. Do the advantages of this development outweigh the disadvantages?\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+  "chart_description": null,
+  "essay": "Nowadays social media is very popular in the world. Many people use facebook, tiktok everyday. In my opinion it have advantage and disadvantage but i think advantage is more.\n\nFirstly, social media help people connect together. If you have friend in other country, you can talking with them everyday and it is free. Before, we must send letter and wait very long time. Also social media help people find information quickly and learn many thing. For example student can join group to study together and share document.\n\nSecondly, social media is bad for health. Many people use phone too much and they can not sleep. Some student use facebook when study and they get bad score. Another problem is fake news, many people believe the wrong information on internet and it make problem in society. Also some people is bullied on social media and they feel very sad.\n\nIn conclusion, social media have good point and bad point. But i think the advantage is more than disadvantage because it help people connect and learn. People should use it careful and not too much.",
+  "gold": {
+    "overall": 4.5,
+    "criteria": {
+      "TR": 4.5,
+      "CC": 5.0,
+      "LR": 4.5,
+      "GRA": 4.0
+    },
+    "source": "expert-estimate-from-official-descriptors",
+    "confidence": "medium"
+  },
+  "notes": "Band 4.5 profile and UNDER LENGTH (~185 words vs 250 required) — this item specifically tests the word-count penalty path. Position is stated but barely developed; 'Firstly/Secondly' mislabels the advantage/disadvantage contrast. Pervasive grammar errors: subject-verb agreement ('it have', 'social media have', 'some people is'), verb form ('can talking'), missing articles, uncapitalised 'i' and 'facebook', countability ('many thing', 'friend'). Vocabulary is very limited and repetitive ('advantage/disadvantage' repeated 6 times, 'people' 8 times). Adverb/adjective confusion ('use it careful')."
+}

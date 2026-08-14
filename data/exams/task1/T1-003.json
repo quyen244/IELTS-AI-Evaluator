@@ -1,0 +1,21 @@
+{
+  "exam_id": "T1-003",
+  "task_type": "task1",
+  "task_variant": "academic-table",
+  "topic": "International student enrolment",
+  "prompt": "The table below gives information about the number of international students enrolled at four universities in 2010 and 2020.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+  "chart_description": "Table. Columns: University, 2010 enrolment, 2020 enrolment.\n\nNorthfield University: 2010 = 4,200; 2020 = 9,800.\nEastgate University: 2010 = 7,500; 2020 = 6,100.\nSouthbank University: 2010 = 1,800; 2020 = 5,400.\nWestwood University: 2010 = 5,000; 2020 = 5,200.",
+  "essay": "The table gives information about international student numbers at four universities in 2010 and 2020.\n\nOverall, three of the four universities recruited more international students in 2020 than a decade earlier, and Northfield ended the period as the largest host institution, having overtaken Eastgate, the only university to record a decline.\n\nNorthfield saw the largest absolute growth, with enrolment more than doubling from 4,200 to 9,800 students. Southbank experienced the steepest proportional rise: although its intake was the smallest in 2010 at just 1,800, it tripled over the ten years to reach 5,400, overtaking Westwood in the process.\n\nBy contrast, Eastgate was the only institution to lose ground. Having enrolled 7,500 international students in 2010, the highest figure of any university that year, it fell to 6,100 by 2020, a drop of roughly 19%. Westwood remained essentially static, edging up marginally from 5,000 to 5,200, a change of only 4% over the entire decade.",
+  "gold": {
+    "overall": 7.5,
+    "criteria": {
+      "TA": 8.0,
+      "CC": 7.5,
+      "LR": 7.5,
+      "GRA": 7.5
+    },
+    "source": "expert-estimate-from-official-descriptors",
+    "confidence": "medium"
+  },
+  "notes": "Band 7.5 profile. Overview is precise and identifies the genuinely important features (three rise / one falls; rank change between Northfield and Eastgate). Distinguishes absolute from proportional growth — a hallmark of strong Task Achievement. Percentages are calculated correctly. Language of change is varied and precise ('overtaken', 'steepest proportional rise', 'lose ground', 'edging up marginally', 'remained essentially static'). Perfect participle clauses used naturally. Word count ~165."
+}

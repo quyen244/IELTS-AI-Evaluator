@@ -16,13 +16,26 @@
 </p>
 
 
-**Technical Highlights:**
+**Technical Highlights (P0 — MVP đã chạy được):**
 
-* **Orchestration:** **LangChain** để xây dựng pipeline chấm điểm đa bước (Multi-step evaluation).
-* **Backend:** **FastAPI** cung cấp các API xử lý văn bản thời gian thực.
-* **LLM Integration:** Tận dụng **GPT-4o** và **Gemini 1.5 Pro** để phân tích sâu sắc về ngữ nghĩa và ngữ pháp.
-* **Frontend:** **Streamlit** dashboard cho phép người dùng nộp bài, xem điểm band và nhận feedback trực quan.
-* **Data Storage:** **SQLAlchemy** quản lý lịch sử bài viết và tiến trình học tập của người dùng.
+* **LLM cục bộ:** **Ollama + `qwen3.5:4b`**, `think=False`, structured output ép bằng JSON Schema. Chạy offline, không cần API key, chi phí biến đổi bằng 0.
+* **Pipeline 6 bước:** preprocess xác định → 4 criterion evaluator (TA/TR, CC, LR, GRA) có rubric anchoring → sentence corrector → aggregation xác định → feedback synthesizer tiếng Việt.
+* **LLM cho phán đoán, code cho số học:** đếm từ, TTR, trung bình, làm tròn band, length penalty, kiểm chứng trích dẫn — tất cả bằng code.
+* **Đo lường tích hợp:** eval harness với gold-label dataset, 8 metric chất lượng + 12 metric hệ thống, `quote_fidelity` phát hiện feedback bịa đặt.
+* **Provider-agnostic:** mọi thứ đi qua `LLMClient` Protocol — thêm OpenAI/Gemini là thêm một adapter, pipeline không đổi.
+
+> 📖 **Toàn bộ PRD, kiến trúc, luồng hệ thống, technical spec, evaluation protocol và roadmap P0→P3 nằm trong [`docs/`](docs/README.md).**
+
+### Chạy thử
+
+```bash
+pip install -r requirements.txt
+ollama pull qwen3.5:4b
+
+python -m scripts.run_mvp --exam-id T2-001      # chấm 1 bài
+python -m scripts.run_eval --out data/reports   # benchmark 10 bài + báo cáo
+python -m pytest tests/ -q                      # 41 test cho phần xác định
+```
 
 ---
 
@@ -106,14 +119,16 @@ Hệ thống đánh giá bài viết dựa trên khung tiêu chí chuẩn của 
 
 ## **Tech Stack**
 
-| Category | Technology |
-| --- | --- |
-| **LLM Framework** | LangChain |
-| **Backend** | FastAPI, Uvicorn |
-| **Frontend** | Streamlit |
-| **Database** | PostgreSQL |
-| **AI Models** | Google Gemini 1.5 Pro, OpenAI GPT-4 |
-| **Data Processing** | Pydantic (Schema), Pandas |
+| Category | P0 (đã build) | P1+ (kế hoạch) |
+| --- | --- | --- |
+| **LLM runtime** | Ollama (local) | + OpenAI / Gemini adapter |
+| **AI Model** | `qwen3.5:4b` (Q4, 3.3GB) | + `qwen3.5:8b`, cloud models |
+| **Orchestration** | Ollama SDK + Pydantic ([tại sao không LangChain](docs/adr/0002-drop-langchain-for-mvp.md)) | — |
+| **Schema / Validation** | Pydantic v2, pydantic-settings | idem |
+| **Backend** | CLI | FastAPI, Uvicorn |
+| **Frontend** | CLI | Streamlit |
+| **Database** | JSON file | PostgreSQL + SQLAlchemy |
+| **Test** | pytest (41 test) | + golden-file, regression gate |
 
 ---
 

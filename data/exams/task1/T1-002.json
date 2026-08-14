@@ -1,0 +1,21 @@
+{
+  "exam_id": "T1-002",
+  "task_type": "task1",
+  "task_variant": "academic-bar-chart",
+  "topic": "Household spending by category",
+  "prompt": "The chart below shows the percentage of household income spent on five categories in three countries in 2019.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+  "chart_description": "Grouped bar chart. Y-axis: percentage of household income (0-45%). Five categories on X-axis, three bars each (Japan, Brazil, Germany).\n\nHousing: Japan 25%, Brazil 18%, Germany 32%.\nFood: Japan 22%, Brazil 35%, Germany 15%.\nTransport: Japan 12%, Brazil 20%, Germany 16%.\nHealthcare: Japan 15%, Brazil 12%, Germany 20%.\nLeisure: Japan 10%, Brazil 5%, Germany 12%.",
+  "essay": "The bar chart compares how households in Japan, Brazil and Germany divided their income across five spending categories in 2019.\n\nOverall, housing and food were the two largest expenses in all three countries, but the balance between them differed sharply: German households spent most on housing, whereas Brazilian households devoted the largest share to food. Leisure consistently attracted the smallest proportion of spending everywhere.\n\nLooking at the figures in more detail, housing accounted for 32% of German household income, considerably higher than in Japan (25%) and Brazil (18%). Food showed the reverse pattern, taking up 35% of Brazilian income, more than double the German figure of 15%, with Japan lying between the two at 22%.\n\nThe remaining categories showed smaller variations. Transport ranged from 12% in Japan to 20% in Brazil, while healthcare was highest in Germany at 20% and lowest in Brazil at 12%. Leisure spending was very similar in Germany and Japan, at 12% and 10% respectively, but reached only 5% in Brazil, half the Japanese level.",
+  "gold": {
+    "overall": 7.0,
+    "criteria": {
+      "TA": 7.5,
+      "CC": 7.0,
+      "LR": 7.0,
+      "GRA": 7.0
+    },
+    "source": "expert-estimate-from-official-descriptors",
+    "confidence": "medium"
+  },
+  "notes": "Band 7.0 profile. Clear separate overview paragraph identifying the key contrast — a strong TA signal. Data is selected rather than listed exhaustively, and comparisons are made rather than described in isolation. Accurate figures throughout. Good comparative language ('more than double', 'the reverse pattern', 'half the Japanese level'). Grammar is accurate with varied structures; range is good but not wide enough for band 8. Word count ~185."
+}

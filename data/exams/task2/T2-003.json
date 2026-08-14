@@ -1,0 +1,21 @@
+{
+  "exam_id": "T2-003",
+  "task_type": "task2",
+  "task_variant": "problem-solution",
+  "topic": "Traffic congestion in cities",
+  "prompt": "Traffic congestion is becoming a serious problem in many large cities. What are the causes of this problem and what measures could be taken to solve it?\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+  "chart_description": null,
+  "essay": "Gridlocked streets have become a defining feature of urban life in most rapidly expanding metropolises. This essay will identify the principal drivers of this phenomenon and outline the measures that municipal authorities could realistically adopt.\n\nThe root cause is arguably demographic rather than technical. As economic opportunity concentrates in a handful of cities, rural populations migrate in numbers that far outstrip the pace at which road networks can be extended. Ho Chi Minh City, for example, absorbed roughly two hundred thousand new residents annually over the past decade while its road surface area grew by a fraction of that rate. Compounding this imbalance is the aspirational status attached to private vehicle ownership: as household incomes rise, families that once relied on public transport purchase cars, occupying disproportionate road space per passenger. A third factor is inadequate urban planning, whereby commercial districts, schools and residential zones are separated in ways that make lengthy daily commuting unavoidable.\n\nAddressing congestion therefore requires intervention on several fronts simultaneously. The most effective long-term remedy is sustained investment in mass rapid transit, since a single metro line can carry the passenger volume of several motorway lanes at a fraction of the spatial cost. This should be reinforced by demand-side measures such as congestion charging, which has demonstrably reduced central-city traffic in London and Singapore by making peak-hour driving financially unattractive. Finally, planning reform that encourages mixed-use development would shorten journeys at source, and the normalisation of remote working, accelerated by recent global events, offers an inexpensive means of removing a proportion of commuters from the road entirely.\n\nIn conclusion, congestion arises from the interaction of migration, rising affluence and poor planning. Only a coordinated response combining transit investment, pricing mechanisms and spatial reform is likely to produce lasting improvement.",
+  "gold": {
+    "overall": 7.5,
+    "criteria": {
+      "TR": 7.5,
+      "CC": 7.5,
+      "LR": 8.0,
+      "GRA": 7.5
+    },
+    "source": "expert-estimate-from-official-descriptors",
+    "confidence": "medium"
+  },
+  "notes": "Band 7.5 profile: both parts of the question fully addressed with well-extended, well-supported ideas and concrete examples. Cohesion is managed naturally with varied linking (not mechanical connectors). Lexical resource is a clear strength — 'gridlocked', 'outstrip', 'aspirational status', 'demand-side measures', 'normalisation' — used with precision and natural collocation. Wide range of complex structures with high accuracy. Word count ~310."
+}

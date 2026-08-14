@@ -1,0 +1,15 @@
+# Core (P0 MVP — runs fully offline on Ollama)
+ollama>=0.4.0
+pydantic>=2.7
+pydantic-settings>=2.2
+python-dotenv>=1.0
+
+# Test
+pytest>=8.0
+
+# P1+ (not required to run the MVP pipeline)
+# fastapi>=0.110
+# uvicorn>=0.29
+# streamlit>=1.33
+# sqlalchemy>=2.0
+# psycopg[binary]>=3.1

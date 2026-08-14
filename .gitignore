@@ -155,3 +155,6 @@ data/uploads/
 data/cache/
 logs/
 *.csv.bak
+
+# Benchmark output (regenerate with: python -m scripts.run_eval)
+data/reports/

@@ -1,0 +1,21 @@
+{
+  "exam_id": "T2-002",
+  "task_type": "task2",
+  "task_variant": "discuss-both-views",
+  "topic": "Online learning vs classroom learning",
+  "prompt": "Some people think that online learning is more effective than attending classes in person, while others believe that face-to-face teaching cannot be replaced. Discuss both views and give your own opinion.\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+  "chart_description": null,
+  "essay": "The rapid growth of digital technology has transformed the way people acquire knowledge. While a considerable number of individuals argue that online courses deliver better results, others maintain that traditional classrooms remain irreplaceable. This essay will examine both positions before presenting my own view.\n\nThose who favour online learning point primarily to flexibility and accessibility. Learners can study at their own pace, revisiting recorded lectures whenever a concept proves difficult, and they are not restricted by geography. A student living in a rural province of Vietnam, for instance, can now enrol in courses taught by professors at leading universities without relocating. Furthermore, online platforms are generally cheaper, which widens access for families with limited financial means.\n\nOn the other hand, supporters of face-to-face instruction emphasise the value of direct human interaction. In a physical classroom, teachers can immediately notice confusion on a student's face and adjust their explanation accordingly, something that is far harder to achieve through a screen. Classroom settings also foster collaboration and social skills, as students negotiate ideas in group discussions and build relationships with their peers. For younger learners in particular, the discipline imposed by a fixed timetable and a physical environment is often essential for maintaining motivation.\n\nIn my opinion, neither mode is superior in absolute terms; effectiveness depends on the learner and the subject. Theoretical content such as programming or economics can be delivered successfully online, whereas practical disciplines like medicine or laboratory science clearly require physical presence. Therefore, I believe a blended approach, combining the flexibility of digital resources with the interpersonal benefits of the classroom, represents the most effective solution.\n\nIn conclusion, although online learning offers undeniable advantages in terms of cost and convenience, face-to-face teaching retains unique strengths. A hybrid model is likely to serve most learners best.",
+  "gold": {
+    "overall": 6.5,
+    "criteria": {
+      "TR": 6.5,
+      "CC": 7.0,
+      "LR": 6.5,
+      "GRA": 6.5
+    },
+    "source": "expert-estimate-from-official-descriptors",
+    "confidence": "medium"
+  },
+  "notes": "Band 6.5 profile: both views addressed with roughly equal development, clear position stated. Paragraphing is logical and cohesion is well managed. Vocabulary shows some less common items ('irreplaceable', 'negotiate ideas', 'blended approach') used accurately, though range is not wide. Grammar is largely error-free with a mix of complex structures, but sentence patterns are somewhat formulaic. Word count ~300."
+}

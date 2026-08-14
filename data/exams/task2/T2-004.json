@@ -1,0 +1,21 @@
+{
+  "exam_id": "T2-004",
+  "task_type": "task2",
+  "task_variant": "two-part-question",
+  "topic": "Museums and cultural heritage",
+  "prompt": "Some museums charge an entrance fee while others are free to enter. Why do some museums charge visitors? Do you think museums should be free for everyone?\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+  "chart_description": null,
+  "essay": "Whether cultural institutions ought to be funded by their visitors or by the public purse is a question that reveals competing assumptions about what a museum is for. This essay first considers why admission charges persist and then argues that, while free entry is a worthy ideal, it is defensible only where public funding is genuinely secure.\n\nThe rationale for charging is largely a matter of institutional survival. Conservation is extraordinarily expensive: climate-controlled storage, specialist restoration and the insurance premiums attached to irreplaceable objects consume budgets that ticket revenue alone rarely covers, let alone government grants that fluctuate with each electoral cycle. Charging also performs a subtler function, regulating visitor flow. The Uffizi in Florence, for instance, would be physically incapable of accommodating unrestricted demand without accelerating the deterioration of the very works people come to see. There is, additionally, an argument from equity that is frequently overlooked: where a museum's audience is disproportionately affluent or foreign, free entry effectively transfers money from ordinary taxpayers to visitors who could comfortably afford a ticket.\n\nNevertheless, I would contend that the case for free access is ultimately the stronger one, provided the funding model is robust. Museums are not merely repositories of objects; they are instruments through which a society transmits its history to those who did not inherit access to it. The moment a price is attached, the children most likely to be excluded are precisely those least likely to encounter such material elsewhere. Britain's decision to abolish charges at its national museums in 2001 is instructive: attendance roughly doubled, and the composition of that audience broadened measurably.\n\nMy conclusion, therefore, is a qualified one. Museums charge because conservation is costly and demand requires management, and these are legitimate pressures rather than institutional greed. Yet where a state can afford to underwrite them, it should, because the social return on an open door exceeds anything a turnstile can collect.",
+  "gold": {
+    "overall": 8.0,
+    "criteria": {
+      "TR": 8.0,
+      "CC": 8.0,
+      "LR": 8.5,
+      "GRA": 8.0
+    },
+    "source": "expert-estimate-from-official-descriptors",
+    "confidence": "medium"
+  },
+  "notes": "Band 8.0 profile: both parts answered fully with a nuanced, qualified position sustained throughout. Ideas are extended with genuinely specific support (Uffizi, UK 2001 policy). Cohesion is invisible — achieved through logical sequencing rather than connector words. Lexical resource is wide and precise ('public purse', 'electoral cycle', 'repositories', 'underwrite', 'turnstile'), with skilful, natural collocation. Grammar shows a wide range of complex structures with only rare slips. Word count ~340."
+}

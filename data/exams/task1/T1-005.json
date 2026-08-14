@@ -1,0 +1,21 @@
+{
+  "exam_id": "T1-005",
+  "task_type": "task1",
+  "task_variant": "academic-pie-chart",
+  "topic": "Waste disposal methods",
+  "prompt": "The pie charts below show how household waste was disposed of in one city in 2000 and 2020.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+  "chart_description": "Two pie charts, each totalling 100%.\n\nYear 2000: Landfill 60%, Incineration 25%, Recycling 10%, Composting 5%.\nYear 2020: Landfill 20%, Incineration 30%, Recycling 35%, Composting 15%.",
+  "essay": "The two pie chart show the way that the city throw away the rubbish of household in year 2000 and year 2020.\n\nIn 2000 the landfill is the most popular method, it is 60 percent. The second is incineration with 25 percent. Recycling only have 10 percent and composting is smallest with 5 percent.\n\nIn 2020 the situation is different. Recycling become the biggest with 35 percent and incineration is 30 percent. The landfill reduce a lot, only 20 percent now. Composting increase to 15 percent.\n\nSo we can see that the landfill go down 40 percent and the recycling go up 25 percent.",
+  "gold": {
+    "overall": 4.5,
+    "criteria": {
+      "TA": 4.5,
+      "CC": 5.0,
+      "LR": 4.0,
+      "GRA": 4.0
+    },
+    "source": "expert-estimate-from-official-descriptors",
+    "confidence": "medium"
+  },
+  "notes": "Band 4.5 profile and UNDER LENGTH (~110 words vs 150 required) — this item tests the Task 1 word-count penalty path. Data is merely listed chart-by-chart with almost no comparison across years, and there is no genuine overview (the final sentence gives two figures, not a summary of main features). Persistent present-tense narration where past tense is needed. Subject-verb agreement failures throughout ('the pie chart show', 'the city throw', 'recycling only have', 'landfill reduce', 'recycling go up'). Article errors and missing superlative articles ('is smallest'). Vocabulary is minimal and repetitive; 'percent' repeated 8 times with no variation."
+}

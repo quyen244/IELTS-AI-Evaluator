@@ -1,0 +1,21 @@
+{
+  "exam_id": "T2-001",
+  "task_type": "task2",
+  "task_variant": "opinion",
+  "topic": "Space exploration funding",
+  "prompt": "Governments in many countries spend large amounts of money on space exploration. Some people believe this money should instead be spent solving problems on Earth. To what extent do you agree or disagree?\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
+  "chart_description": null,
+  "essay": "it is argued that in the large number of countries, governments allocated large amounts of financial resources to space exploration. Some individuals suggest that it is essential to spend budget to address issues on earth. From my perspective, I partly agree with this viewpoint due to several reasons that will be explained in the following essay.\n\nOn the one hand, the major reason that explain why many countries spend a great deal of money and effort on space exploration is innovation and development. When financial investment in space exploration is more and more, scientists have sufficient resources to generate science breakthroughs such as renewable materials and new technology that can change and improve the living standards. As a result, this investment can serve as the primary motivation, which often promotes the development, potentially helping solve problems in the future.\n\nHowever, there are several compelling reasons why some people advocate for focusing on tackling problems on earth is poverty and pollution. Nowadays, many people are suffering from the lack of access to essentials such as food and clear water, which is limited by industrial manufacturing excessively, and industrial expansion, especially in many Africa countries. As a result, if government spend money for solve this problem, the life of poor people will be better and they can have a good life.\n\nIn addition, the pollution is also a big problem in many country now. The factories release many dangerous gas to the air and it make people get sick. The government should use the money to build the system for clean the air instead of send rocket to the space which is very expensive and not help people directly.\n\nIn conclusion, although space exploration bring some benefit for science, I think the government should spend more money to solve the problem on earth first because it is more important for the people life.",
+  "gold": {
+    "overall": 5.5,
+    "criteria": {
+      "TR": 5.5,
+      "CC": 6.0,
+      "LR": 5.5,
+      "GRA": 5.0
+    },
+    "source": "expert-estimate-from-official-descriptors",
+    "confidence": "medium"
+  },
+  "notes": "Band 5.5 profile: position is present and consistent, but body paragraph 1 argues FOR space exploration without linking back to the stated position. Recurrent subject-verb agreement errors ('reason that explain', 'government spend', 'it make'), article errors ('in the large number of'), missing capitalisation at the start. Vocabulary is adequate but repetitive ('problem', 'money', 'people'). Cohesive devices are present but mechanical. Word count ~330, above the minimum."
+}

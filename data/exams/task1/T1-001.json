@@ -1,0 +1,21 @@
+{
+  "exam_id": "T1-001",
+  "task_type": "task1",
+  "task_variant": "academic-line-graph",
+  "topic": "Electricity generation by source",
+  "prompt": "The graph below shows the amount of electricity generated from four different sources in a European country between 1990 and 2020.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+  "chart_description": "Line graph. Y-axis: electricity generated (terawatt-hours, 0-120). X-axis: years 1990, 1995, 2000, 2005, 2010, 2015, 2020.\n\nCoal: 1990 = 100, 1995 = 95, 2000 = 85, 2005 = 70, 2010 = 55, 2015 = 35, 2020 = 15.\nNatural gas: 1990 = 20, 1995 = 35, 2000 = 55, 2005 = 70, 2010 = 75, 2015 = 70, 2020 = 60.\nNuclear: 1990 = 45, 1995 = 48, 2000 = 50, 2005 = 50, 2010 = 45, 2015 = 40, 2020 = 30.\nRenewables: 1990 = 5, 1995 = 8, 2000 = 12, 2005 = 20, 2010 = 35, 2015 = 60, 2020 = 95.",
+  "essay": "The line graph show the electricity produce from four source in one country of Europe from 1990 to 2020.\n\nIn 1990, coal is the biggest source with 100 terawatt-hours. After that it go down every year and in 2020 it only have 15 terawatt-hours. This is a very big decrease.\n\nRenewables is opposite. In 1990 it is only 5 but it increase slowly until 2005 and then it increase very fast. In 2020 renewables become the biggest source with 95 terawatt-hours.\n\nNatural gas increase from 20 in 1990 to 75 in 2010, it is the highest point. Then it decrease to 60 in 2020. Nuclear is more stable, it stay around 45 to 50 for many year and then go down to 30 in 2020.\n\nIn general, coal and renewables change place with each other, and gas increase then decrease.",
+  "gold": {
+    "overall": 5.0,
+    "criteria": {
+      "TA": 5.5,
+      "CC": 5.0,
+      "LR": 4.5,
+      "GRA": 4.5
+    },
+    "source": "expert-estimate-from-official-descriptors",
+    "confidence": "medium"
+  },
+  "notes": "Band 5.0 profile. TA is the relative strength: all four trends are covered and figures are accurate, and the final sentence functions weakly as an overview. GRA is the weakness: consistent present-tense narration where past tense is required ('coal is', 'it go down', 'it increase'), subject-verb agreement ('the graph show', 'it only have'), plural errors ('four source', 'many year'). LR is very limited — 'increase/decrease' repeated with almost no variation, no data-description range ('plummeted', 'levelled off', 'overtook'). Word count ~155, just above minimum."
+}
