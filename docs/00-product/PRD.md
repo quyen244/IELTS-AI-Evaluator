@@ -128,14 +128,16 @@ GTX 1660 Ti 6GB VRAM · qwen3.5:4b (Q4, 3.3GB) · 100% GPU offload · ~46 tok/s 
 
 ### 6.1 Model quality (đo bằng harness, xem [Evaluation Protocol](../03-evaluation/evaluation-protocol.md))
 
-| Metric | Định nghĩa | Target P0 | Target P3 |
-| --- | --- | --- | --- |
-| `MAE_overall` | Mean absolute error của overall band | ≤ 1.0 | ≤ 0.4 |
-| `within_0.5` | % bài lệch ≤ 0.5 band | ≥ 40% | ≥ 75% |
-| `within_1.0` | % bài lệch ≤ 1.0 band | ≥ 75% | ≥ 95% |
-| `MAE_per_criterion` | MAE từng tiêu chí | ≤ 1.2 | ≤ 0.5 |
-| `rank_corr` | Spearman ρ giữa band dự đoán và gold | ≥ 0.6 | ≥ 0.85 |
-| `bias` | Sai số có dấu (dương = chấm rộng tay) | \|bias\| ≤ 0.5 | \|bias\| ≤ 0.2 |
+| Metric | Định nghĩa | Target P0 | **Đo được P0** | Target P3 |
+| --- | --- | --- | --- | --- |
+| `MAE_overall` | Mean absolute error của overall band | ≤ 1.0 | **0.45** ✅ | ≤ 0.4 |
+| `within_0.5` | % bài lệch ≤ 0.5 band | ≥ 40% | **90%** ✅ | ≥ 75% |
+| `within_1.0` | % bài lệch ≤ 1.0 band | ≥ 75% | **100%** ✅ | ≥ 95% |
+| `MAE_per_criterion` | MAE từng tiêu chí | ≤ 1.2 | **0.40–0.75** ✅ | ≤ 0.5 |
+| `rank_corr` | Spearman ρ giữa band dự đoán và gold | ≥ 0.6 | **0.877** ✅ | ≥ 0.85 |
+| `bias` | Sai số có dấu (dương = chấm rộng tay) | \|bias\| ≤ 0.5 | **+0.35** ✅ | \|bias\| ≤ 0.2 |
+
+> Chi tiết và **các cảnh báo bắt buộc về ý nghĩa của những con số này** (n=10, nhãn tự tạo, dataset dễ hơn thực tế): [MVP Baseline Report](../03-evaluation/mvp-baseline-report.md).
 
 > **`rank_corr` quan trọng hơn `MAE` ở giai đoạn đầu.** Nếu hệ thống xếp hạng đúng bài tốt/bài kém nhưng lệch đều một khoảng cố định, ta sửa được bằng **calibration layer** (P2) — rẻ. Nếu xếp hạng sai, phải sửa prompt/model — đắt.
 
@@ -149,11 +151,11 @@ Retention tuần 4, số bài nộp / user / tuần, % user tự báo cáo "feed
 
 ## 7. Key Risks & Mitigations
 
-| # | Rủi ro | Mức độ | Giảm thiểu |
-| --- | --- | --- | --- |
-| R1 | **Model 4B chấm không chuẩn**, dồn về band trung bình (central tendency bias) | Cao | Đo `bias` + `rank_corr` riêng; áp calibration layer (P2); few-shot anchor bằng bài mẫu có band chuẩn |
-| R2 | **Hallucinated quotes** — LLM bịa câu không có trong bài | Cao | `verify_quote()` bắt buộc; loại quote sai trước khi hiển thị (FR-2) |
-| R3 | **JSON parse fail** | Trung bình | Dùng `format=<json_schema>` native của Ollama + retry có phản hồi lỗi + fallback repair |
+| # | Rủi ro | Mức độ | Giảm thiểu | Trạng thái sau P0 |
+| --- | --- | --- | --- | --- |
+| R1 | **Model 4B chấm không chuẩn**, dồn về band trung bình (central tendency bias) | Cao | Đo `bias` + `rank_corr` riêng; calibration layer; few-shot anchor | ⬇️ **Hạ xuống Thấp.** `std_ratio = 0.949` — không nén dải. Chỉ LR bị (0.709). |
+| R2 | **Hallucinated quotes** — LLM bịa câu không có trong bài | Cao | `verify_quote()` bắt buộc; loại quote sai trước khi hiển thị (FR-2) | ⬆️ **Nâng lên rủi ro số 1.** Đo được 23% quote bịa. Lưới an toàn hoạt động nhưng cần sửa gốc (P1.1). |
+| R3 | **JSON parse fail** | Trung bình | Dùng `format=<json_schema>` native của Ollama + retry có phản hồi lỗi | ✅ **Đóng.** `json_parse_rate = 100%`, không call nào cần retry. |
 | R4 | **Gold label không đáng tin** (dataset tự tạo) | Cao | Ghi rõ nguồn và mức tin cậy từng nhãn; tuyệt đối không tuyên bố độ chính xác tuyệt đối; P2 cần đối chiếu người chấm thật |
 | R5 | **Latency cold start 110s** làm hỏng trải nghiệm | Trung bình | `keep_alive="30m"` + warm-up call khi khởi động service |
 | R6 | Người dùng coi điểm IAE là điểm IELTS thật | Trung bình | Disclaimer bắt buộc trên mọi output: "Điểm tham khảo cho mục đích luyện tập" |
@@ -175,6 +177,6 @@ Retention tuần 4, số bài nộp / user / tuần, % user tự báo cáo "feed
 | # | Câu hỏi | Cần quyết trước phase |
 | --- | --- | --- |
 | Q1 | Có cần chấm cả bài Task 1 có biểu đồ (multimodal) không, hay chỉ nhận mô tả text của biểu đồ? | P2 |
-| Q2 | Calibration nên là hàm tuyến tính toàn cục hay per-criterion? | P2 — quyết bằng dữ liệu sau khi có ≥ 50 bài gold |
+| Q2 | ~~Calibration nên là hàm tuyến tính toàn cục hay per-criterion?~~ | ✅ **Đã trả lời bằng dữ liệu P0: bắt buộc per-criterion.** Bias ngược chiều giữa các tiêu chí (CC −0.35, TA −0.20, LR +0.10, TR +0.40, GRA +0.65) — một hàm toàn cục sẽ để chúng triệt tiêu lẫn nhau. |
 | Q3 | Có lưu bài viết của user vào DB không (privacy) — opt-in hay opt-out? | P1 |
-| Q4 | Model 4B có đủ không, hay cần lên 7B/8B? | P1 — quyết bằng A/B trên cùng dataset |
+| Q4 | Model 4B có đủ không, hay cần lên 7B/8B? | ⏸️ **Hoãn.** `rho = 0.877` với 4B ⇒ năng lực phán đoán không phải nút thắt hiện tại. Đánh giá lại sau khi xong P1.1–P1.4. |

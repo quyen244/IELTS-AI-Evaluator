@@ -40,21 +40,40 @@ Sắp xếp theo **tỉ lệ (mức cải thiện kỳ vọng) / (chi phí thự
 
 ## P1 — Độ chính xác & tin cậy (2–3 tuần)
 
-**Mục tiêu:** đưa chất lượng chấm từ "chạy được" lên "dùng được", và mở rộng nền tảng đo lường.
+**Mục tiêu:** sửa điểm hỏng đã đo được, và mở rộng nền tảng đo lường.
 
-### P1.1 — Few-shot rubric anchoring `[ưu tiên cao nhất]`
-Chèn vào prompt mỗi tiêu chí **2 bài mẫu neo** (một band thấp ~5.0, một band cao ~7.5) kèm band và justification mẫu.
+> Thứ tự dưới đây **đã được viết lại sau khi có số liệu baseline**. Dự đoán ban đầu (few-shot anchoring là ưu tiên số 1 vì model sẽ nén dải điểm) **chỉ đúng một phần**: `std_ratio` tổng thể là 0.949 — model không nén dải. Chỉ riêng LR bị (0.709). Đổi lại, một vấn đề không hề được dự đoán — `quote_fidelity` 77% — hoá ra là điểm hỏng nghiêm trọng nhất.
 
-*Lý do:* model nhỏ nén dải điểm về giữa vì không có mốc tham chiếu cụ thể — nó chỉ có mô tả trừu tượng. Một ví dụ cụ thể "bài này là band 5" đáng giá hơn ba dòng descriptor.
-*Chi phí:* +~600 token/call, tăng latency ~15%.
-*Exit:* `std_ratio` tăng về ≥ 0.75 **và** `spearman_rho` không giảm.
+### P1.1 — Trích dẫn theo `sentence_index` `[ưu tiên cao nhất]`
+Thay vì bắt model chép lại văn bản, cho model trả về **chỉ số câu**; code tra ngược ra câu nguyên văn từ kết quả preprocess.
 
-### P1.2 — Calibration layer
-Fit hàm `final = a·raw + b` (hoặc per-criterion) trên tập gold, áp giữa `raw_overall` và `overall_band`.
+*Lý do (đo được):* `quote_fidelity = 77%` — 43/187 trích dẫn không tồn tại nguyên văn. Model **sửa lỗi của học viên ngay khi trích dẫn**, xoá mất chính lỗi cần chỉ ra. Đây là NFR duy nhất bị trượt.
+*Cách sửa đúng nguyên tắc:* biến trích dẫn từ tác vụ sinh văn bản (dễ sai) thành tác vụ chọn chỉ mục (khó sai) — cùng logic đã dùng cho word count.
+*Exit:* `quote_fidelity ≥ 98%`, `MAE_overall` không tệ đi.
 
-*Lý do:* nếu `rho` cao mà `bias` lệch, đây là cách rẻ nhất để thu MAE. Điểm chèn đã có sẵn trong `aggregate.py`.
-*Bắt buộc:* fit trên tập train, đo trên tập test tách biệt. Fit và đo trên cùng 10 bài chỉ tạo ra ảo giác cải thiện.
-*Exit:* `MAE_overall` giảm ≥ 0.2 trên tập **held-out**.
+### P1.2 — Đưa mật độ lỗi vào prompt GRA
+Đảo thứ tự pipeline: chạy sentence corrector **trước** GRA, đưa `error_count / sentence_count` vào prompt GRA như dữ kiện khách quan.
+
+*Lý do (đo được):* GRA là tiêu chí tệ nhất — `MAE 0.75`, `bias +0.65`, `within_0.5` chỉ 50%. Model **nhìn thấy** lỗi (corrector bắt đúng) nhưng không quy đổi mật độ lỗi thành band. Rubric bảo nó "đếm câu error-free"; nó không đếm.
+*Đây là cùng một bài học đã áp dụng cho word count:* việc đếm phải do code làm.
+*Exit:* `MAE_GRA ≤ 0.45`, `bias_GRA ≤ +0.3`.
+
+### P1.3 — Mở rộng dataset lên 40–50 bài
+Phủ đều band 4.0–9.0, cả hai task, nhiều dạng đề. Chia train/test. **Ưu tiên khoảng 6.0–7.0** — nơi phần lớn thí sinh thật nằm và cũng là nơi dataset hiện tại mỏng nhất.
+
+*Lý do:* n=10 quá nhỏ; chênh lệch MAE < 0.2 không phân biệt được với nhiễu. Là điều kiện tiên quyết cho P1.4.
+*Exit:* ≥ 40 bài, ≥ 5 bài mỗi nửa band trong khoảng 5.0–8.0.
+
+### P1.4 — Calibration **theo từng tiêu chí** (không dùng hàm toàn cục)
+Fit `band' = a_c · band + b_c` riêng cho mỗi tiêu chí, áp trong `aggregate.py`.
+
+*Lý do (đo được):* baseline trả lời dứt khoát câu hỏi mở Q2 của PRD. Bias **ngược chiều nhau** giữa các tiêu chí: CC `−0.35`, TA `−0.20`, LR `+0.10`, TR `+0.40`, GRA `+0.65`. Một hàm toàn cục sẽ để chúng triệt tiêu lẫn nhau và không sửa được gì.
+*Bắt buộc:* fit trên train, đo trên test tách biệt. Fit và đo trên cùng 10 bài chỉ tạo ảo giác cải thiện.
+*Exit:* `MAE_overall` giảm ≥ 0.15 trên tập **held-out**, `|bias|` ≤ 0.2.
+
+### P1.5 — Few-shot anchoring **chỉ cho LR**
+*Lý do (đo được):* chỉ LR nén dải (`std_ratio = 0.709`); TA/TR/CC đều ≈ 1.0–1.07. Vấn đề khu trú ở rubric LR, không phải ở model. Áp few-shot cho cả 4 tiêu chí là trả giá token cho ba tiêu chí không cần.
+*Exit:* `std_ratio_LR ≥ 0.85`, `rho` không giảm.
 
 ### P1.3 — Mở rộng dataset lên 40–50 bài
 Phủ đều band 4.0–9.0, cả hai task, nhiều dạng đề. Chia train/test.
@@ -62,12 +81,12 @@ Phủ đều band 4.0–9.0, cả hai task, nhiều dạng đề. Chia train/tes
 *Lý do:* 10 bài không đủ để phân biệt cải thiện thật với nhiễu. Đây là điều kiện tiên quyết cho P1.2 và mọi thứ sau đó.
 *Exit:* ≥ 40 bài, ≥ 5 bài mỗi nửa band trong khoảng 5.0–8.0.
 
-### P1.4 — Đo tính ổn định
+### P1.6 — Đo tính ổn định
 Chạy `temperature=0.3`, N=5 lần/bài, báo cáo độ lệch chuẩn band.
 *Lý do:* biết được kết quả nhạy đến mức nào là điều kiện để hiểu ý nghĩa của mọi con số khác.
 *Exit:* có số liệu `band_std` trong `metrics.json`.
 
-### P1.5 — FastAPI + Streamlit + PostgreSQL
+### P1.7 — FastAPI + Streamlit + PostgreSQL
 Đưa pipeline ra khỏi CLI. Schema DB đã thiết kế sẵn ([data-schemas.md § 6](../02-technical/data-schemas.md)).
 *Exit:* nộp bài qua UI, xem kết quả, xem lịch sử.
 
@@ -121,19 +140,30 @@ Sản phẩm thật là feedback, không phải con số. Cần rubric người-
 
 ## Bảng ưu tiên tổng hợp
 
-| # | Hạng mục | Phase | Tác động | Chi phí | Ưu tiên |
+| # | Hạng mục | Phase | Bằng chứng từ baseline | Chi phí | Ưu tiên |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Few-shot rubric anchoring | P1.1 | Cao | Thấp | 🔴 Ngay |
-| 2 | Mở rộng dataset 40–50 bài | P1.3 | Cao (điều kiện tiên quyết) | Trung bình | 🔴 Ngay |
-| 3 | Calibration layer | P1.2 | Cao | Thấp | 🔴 Ngay |
-| 4 | Đo tính ổn định | P1.4 | Trung bình (hiểu biết) | Thấp | 🟠 Sớm |
-| 5 | Gold label chuyên gia | P2.1 | Rất cao (mở khoá mọi tuyên bố) | Cao | 🟠 Sớm |
-| 6 | Kiểm chứng câu sửa | P2.5 | Cao (rủi ro sư phạm) | Trung bình | 🟠 Sớm |
-| 7 | FastAPI + UI + DB | P1.5 | Trung bình (sản phẩm) | Trung bình | 🟡 Kế tiếp |
-| 8 | Self-consistency | P2.2 | Trung bình | Thấp | 🟡 Kế tiếp |
-| 9 | A/B model | P2.3 | Trung bình | Thấp | 🟡 Kế tiếp |
-| 10 | Rubric chất lượng feedback | P2.4 | Cao (giá trị thật) | Cao | 🟡 Kế tiếp |
-| 11 | Multimodal / fine-tune / routing | P3 | Cao | Rất cao | 🟢 Sau |
+| 1 | Trích dẫn theo `sentence_index` | P1.1 | `quote_fidelity` 77% — NFR duy nhất trượt | Thấp | 🔴 Ngay |
+| 2 | Mật độ lỗi vào prompt GRA | P1.2 | GRA `MAE 0.75`, `bias +0.65` — tệ nhất | Thấp | 🔴 Ngay |
+| 3 | Mở rộng dataset 40–50 bài | P1.3 | n=10, khoảng tin cậy quá rộng | Trung bình | 🔴 Ngay |
+| 4 | Calibration **per-criterion** | P1.4 | bias ngược chiều: CC −0.35 vs GRA +0.65 | Thấp | 🔴 Ngay |
+| 5 | Few-shot anchoring **chỉ LR** | P1.5 | chỉ LR `std_ratio` 0.709; còn lại ≈1.0 | Thấp | 🟠 Sớm |
+| 6 | Gold label chuyên gia | P2.1 | mọi con số hiện chỉ so sánh nội bộ được | Cao | 🟠 Sớm |
+| 7 | Kiểm chứng câu sửa | P2.5 | quan sát được giải thích ngữ pháp sai | Trung bình | 🟠 Sớm |
+| 8 | Đo tính ổn định | P1.6 | chưa biết độ nhạy của kết quả | Thấp | 🟠 Sớm |
+| 9 | FastAPI + UI + DB | P1.7 | — (sản phẩm, không phải chất lượng) | Trung bình | 🟡 Kế tiếp |
+| 10 | Rubric chất lượng feedback | P2.4 | — (giá trị thật chưa được đo) | Cao | 🟡 Kế tiếp |
+| 11 | Self-consistency | P2.2 | — | Thấp | 🟢 Sau |
+| 12 | A/B model 4B vs 8B | P2.3 | `rho 0.877` ⇒ model **không** phải nút thắt | Thấp | 🟢 Sau |
+| 13 | Multimodal / fine-tune / routing | P3 | — | Rất cao | 🟢 Sau |
+
+### Điều baseline đã thay đổi trong kế hoạch
+
+| Trước khi đo (dự đoán) | Sau khi đo (thực tế) |
+| --- | --- |
+| "Model 4B sẽ nén dải điểm về giữa" → few-shot là ưu tiên #1 | `std_ratio = 0.949`, **không nén**. Chỉ LR bị. Few-shot tụt xuống #5 và thu hẹp phạm vi. |
+| Calibration có thể là hàm tuyến tính toàn cục | Bias **ngược chiều** giữa các tiêu chí ⇒ **bắt buộc per-criterion**. Trả lời Q2 của PRD. |
+| Không lường trước vấn đề trích dẫn | `quote_fidelity 77%` là điểm hỏng nghiêm trọng nhất → lên #1. |
+| Có thể cần model lớn hơn (Q4 của PRD) | `rho = 0.877` với 4B. Năng lực phán đoán **không** phải nút thắt → A/B model tụt xuống #12. |
 
 ---
 
